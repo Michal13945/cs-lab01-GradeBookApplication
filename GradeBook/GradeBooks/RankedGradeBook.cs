@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace GradeBook.GradeBooks
@@ -76,5 +77,16 @@ namespace GradeBook.GradeBooks
             }
         }
 
+        public override void CalculateStudentStatistics(string name)
+        {
+            if (Students.Count < 5)
+            {
+                Console.WriteLine("Ranked grading requires at least 5 students.");
+            }
+            else
+            {
+                base.CalculateStudentStatistics(name);
+            }
+        }
     }
 }
