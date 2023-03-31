@@ -110,20 +110,37 @@ namespace GradeBook.GradeBooks
 
         public virtual double GetGPA(char letterGrade, StudentType studentType)
         {
+            if (IsWeighted)
+            {
+                switch (letterGrade)
+                {
+                    case 'A':
+                        return studentType == StudentType.Honors || studentType == StudentType.DualEnrolled ? 5 : 4;
+                    case 'B':
+                        return studentType == StudentType.Honors || studentType == StudentType.DualEnrolled ? 4 : 3;
+                    case 'C':
+                        return studentType == StudentType.Honors || studentType == StudentType.DualEnrolled ? 3 : 2;
+                    case 'D':
+                        return studentType == StudentType.Honors || studentType == StudentType.DualEnrolled ? 2 : 1;
+                    case 'F':
+                        return studentType == StudentType.Honors || studentType == StudentType.DualEnrolled ? 1 : 0;
+                }
+                return studentType == StudentType.Honors || studentType == StudentType.DualEnrolled ? 1 : 0;
+            }
             switch (letterGrade)
             {
                 case 'A':
-                    return studentType == StudentType.Honors || studentType == StudentType.DualEnrolled ? 5 : 4;
+                    return 4;
                 case 'B':
-                    return studentType == StudentType.Honors || studentType == StudentType.DualEnrolled ? 4 : 3;
+                    return 3;
                 case 'C':
-                    return studentType == StudentType.Honors || studentType == StudentType.DualEnrolled ? 3 : 2;
+                    return 2;
                 case 'D':
-                    return studentType == StudentType.Honors || studentType == StudentType.DualEnrolled ? 2 : 1;
+                    return 1;
                 case 'F':
-                    return studentType == StudentType.Honors || studentType == StudentType.DualEnrolled ? 1 : 0;
+                    return 0;
             }
-            return studentType == StudentType.Honors || studentType == StudentType.DualEnrolled ? 1 : 0;
+            return 0;
         }
 
         public virtual void CalculateStatistics()

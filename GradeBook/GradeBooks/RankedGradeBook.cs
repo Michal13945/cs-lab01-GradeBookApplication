@@ -1,13 +1,14 @@
 ﻿using GradeBook.Enums;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace GradeBook.GradeBooks
 {
-    internal class RankedGradeBook : BaseGradeBook
+    public class RankedGradeBook : BaseGradeBook
     {
         public RankedGradeBook(string name, bool isWeighted) : base(name, isWeighted)
         {
@@ -22,10 +23,9 @@ namespace GradeBook.GradeBooks
             }
 
             var sortedStudents = Students.OrderByDescending(student => student.AverageGrade).ToList();
-            double result = 0;
             int studentIndex = -1;
 
-           for(int i = 0; i < sortedStudents.Count; i++)
+            for (int i = 0; i < sortedStudents.Count; i++)
             {
                 if (sortedStudents[i].AverageGrade < averageGrade)
                 {
@@ -40,28 +40,24 @@ namespace GradeBook.GradeBooks
             }
             else
             {
-                double placement = (studentIndex / sortedStudents.Count) * 100;
-                            
-                if(placement < 20)
+                double placement = ((double)studentIndex / sortedStudents.Count) * 100;
+                Console.WriteLine(placement + "%");
+
+
+                switch (placement) 
                 {
-                    return 'A';
+                    case double number when (number >= 0 && number <= 20):
+                        return 'A';
+                    case double number when (number >= 20 && number <= 40):
+                        return 'B';
+                    case double number when (number >= 40 && number <= 60):
+                        return 'C';
+                    case double number when (number >= 60 && number <= 80):
+                        return 'D';
+                    default:
+                        return 'F';
                 }
-                else if(placement < 40)
-                {
-                    return 'B';
-                }
-                else if(placement < 60)
-                {
-                    return 'C';
-                }
-                else if(placement < 80)
-                {
-                    return 'D';
-                }
-                else
-                {
-                    return 'F';
-                }
+
             }
         
         }
